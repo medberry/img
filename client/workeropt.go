@@ -23,6 +23,7 @@ import (
 	containerdsnapshot "github.com/moby/buildkit/snapshot/containerd"
 	"github.com/moby/buildkit/worker/base"
 	"github.com/opencontainers/runc/libcontainer/user"
+	"github.com/sirupsen/logrus"
 )
 
 // createWorkerOpt creates a base.WorkerOpt to be used for a new worker.
@@ -38,7 +39,8 @@ func (c *Client) createWorkerOpt() (opt base.WorkerOpt, err error) {
 	if err != nil {
 		return opt, fmt.Errorf("getting current user failed: %v", err)
 	}
-	exe, err := runc.New(filepath.Join(c.root, "executor"), cuser.Uid != 0)
+	logrus.Infof("cuid: %d", cuser.Uid)
+	exe, err := runc.New(filepath.Join(c.root, "executor"), true)
 	if err != nil {
 		return opt, err
 	}

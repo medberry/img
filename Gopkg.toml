@@ -34,8 +34,7 @@
 
 [[override]]
   name = "github.com/moby/buildkit"
-  revision = "all-changes"
-  source = "github.com/jessfraz/buildkit"
+  branch = "master"
 
 [[override]]
   name = "github.com/hanwen/go-fuse"
@@ -71,8 +70,7 @@
 
 [[constraint]]
   name = "github.com/containerd/containerd"
-  branch = "no-lchown"
-  source = "github.com/jessfraz/containerd"
+  branch = "master"
 
 [[override]]
   name = "github.com/containerd/continuity"
