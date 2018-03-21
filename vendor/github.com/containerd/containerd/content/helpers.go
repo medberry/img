@@ -1,19 +1,3 @@
-/*
-   Copyright The containerd Authors.
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
 package content
 
 import (
@@ -78,7 +62,7 @@ func WriteBlob(ctx context.Context, cs Ingester, ref string, r io.Reader, size i
 }
 
 // Copy copies data with the expected digest from the reader into the
-// provided content store writer. This copy commits the writer.
+// provided content store writer.
 //
 // This is useful when the digest and size are known beforehand. When
 // the size or digest is unknown, these values may be empty.
@@ -111,22 +95,6 @@ func Copy(ctx context.Context, cw Writer, r io.Reader, size int64, expected dige
 	}
 
 	return nil
-}
-
-// CopyReaderAt copies to a writer from a given reader at for the given
-// number of bytes. This copy does not commit the writer.
-func CopyReaderAt(cw Writer, ra ReaderAt, n int64) error {
-	ws, err := cw.Status()
-	if err != nil {
-		return err
-	}
-
-	buf := bufPool.Get().(*[]byte)
-	defer bufPool.Put(buf)
-
-	_, err = io.CopyBuffer(cw, io.NewSectionReader(ra, ws.Offset, n), *buf)
-
-	return err
 }
 
 // seekReader attempts to seek the reader to the given offset, either by

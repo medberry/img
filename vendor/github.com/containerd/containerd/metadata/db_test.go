@@ -1,19 +1,3 @@
-/*
-   Copyright The containerd Authors.
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
-
 package metadata
 
 import (
@@ -102,27 +86,6 @@ func TestInit(t *testing.T) {
 }
 
 func TestMigrations(t *testing.T) {
-	testRefs := []struct {
-		ref  string
-		bref string
-	}{
-		{
-			ref:  "k1",
-			bref: "bk1",
-		},
-		{
-			ref:  strings.Repeat("longerkey", 30), // 270 characters
-			bref: "short",
-		},
-		{
-			ref:  "short",
-			bref: strings.Repeat("longerkey", 30), // 270 characters
-		},
-		{
-			ref:  "emptykey",
-			bref: "",
-		},
-	}
 	migrationTests := []struct {
 		name  string
 		init  func(*bolt.Tx) error
@@ -218,48 +181,6 @@ func TestMigrations(t *testing.T) {
 							return errors.Errorf("missing child record for %s", ch)
 						}
 					}
-				}
-
-				return nil
-			},
-		},
-		{
-			name: "IngestUpdate",
-			init: func(tx *bolt.Tx) error {
-				bkt, err := createBucketIfNotExists(tx, bucketKeyVersion, []byte("testing"), bucketKeyObjectContent, deprecatedBucketKeyObjectIngest)
-				if err != nil {
-					return err
-				}
-
-				for _, s := range testRefs {
-					if err := bkt.Put([]byte(s.ref), []byte(s.bref)); err != nil {
-						return err
-					}
-				}
-
-				return nil
-			},
-			check: func(tx *bolt.Tx) error {
-				bkt := getIngestsBucket(tx, "testing")
-				if bkt == nil {
-					return errors.Wrap(errdefs.ErrNotFound, "ingests bucket not found")
-				}
-
-				for _, s := range testRefs {
-					sbkt := bkt.Bucket([]byte(s.ref))
-					if sbkt == nil {
-						return errors.Wrap(errdefs.ErrNotFound, "ref does not exist")
-					}
-
-					bref := string(sbkt.Get(bucketKeyRef))
-					if bref != s.bref {
-						return errors.Errorf("unexpected reference key %q, expected %q", bref, s.bref)
-					}
-				}
-
-				dbkt := getBucket(tx, bucketKeyVersion, []byte("testing"), bucketKeyObjectContent, deprecatedBucketKeyObjectIngest)
-				if dbkt != nil {
-					return errors.New("deprecated ingest bucket still exists")
 				}
 
 				return nil

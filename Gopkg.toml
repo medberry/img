@@ -70,7 +70,7 @@
 
 [[constraint]]
   name = "github.com/containerd/containerd"
-  branch = "master"
+  revision = "af593cf5ab1d8089a42ee7f0b6ed541899378bf7"
 
 [[override]]
   name = "github.com/containerd/continuity"

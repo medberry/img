@@ -1,18 +1,3 @@
-#   Copyright The containerd Authors.
-
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-
-#       http://www.apache.org/licenses/LICENSE-2.0
-
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
-
-
 # Root directory of the project (absolute path).
 ROOTDIR=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
@@ -72,10 +57,7 @@ TEST_REQUIRES_ROOT_PACKAGES=$(filter \
 
 # Project binaries.
 COMMANDS=ctr containerd containerd-stress containerd-release
-MANPAGES=ctr.1 containerd.1 config.toml.5 containerd-config.1
 
-# Build tags seccomp and apparmor are needed by CRI plugin.
-BUILDTAGS ?= seccomp apparmor
 GO_TAGS=$(if $(BUILDTAGS),-tags "$(BUILDTAGS)",)
 GO_LDFLAGS=-ldflags '-s -w -X $(PKG)/version.Version=$(VERSION) -X $(PKG)/version.Revision=$(REVISION) -X $(PKG)/version.Package=$(PKG) $(EXTRA_LDFLAGS)'
 SHIM_GO_LDFLAGS=-ldflags '-s -w -X $(PKG)/version.Version=$(VERSION) -X $(PKG)/version.Revision=$(REVISION) -X $(PKG)/version.Package=$(PKG) -extldflags "-static"'
@@ -100,7 +82,7 @@ BINARIES=$(addprefix bin/,$(COMMANDS))
 TESTFLAGS ?= -v $(TESTFLAGS_RACE)
 TESTFLAGS_PARALLEL ?= 8
 
-.PHONY: clean all AUTHORS build binaries test integration generate protos checkprotos coverage ci check help install uninstall vendor release mandir install-man
+.PHONY: clean all AUTHORS build binaries test integration generate protos checkprotos coverage ci check help install uninstall vendor release
 .DEFAULT: default
 
 all: binaries
@@ -174,25 +156,6 @@ bin/containerd-shim: cmd/containerd-shim FORCE # set !cgo and omit pie for a sta
 
 binaries: $(BINARIES) ## build binaries
 	@echo "$(WHALE) $@"
-
-man: mandir $(addprefix man/,$(MANPAGES))
-	@echo "$(WHALE) $@"
-
-mandir:
-	@mkdir -p man
-
-man/%: docs/man/%.md FORCE
-	@echo "$(WHALE) $<"
-	go-md2man -in "$<" -out "$@"
-
-define installmanpage
-mkdir -p $(DESTDIR)/man/man$(2);
-gzip -c $(1) >$(DESTDIR)/man/man$(2)/$(3).gz;
-endef
-
-install-man:
-	@echo "$(WHALE) $@"
-	$(foreach manpage,$(addprefix man/,$(MANPAGES)), $(call installmanpage,$(manpage),$(subst .,,$(suffix $(manpage))),$(notdir $(manpage))))
 
 release: $(BINARIES)
 	@echo "$(WHALE) $@"

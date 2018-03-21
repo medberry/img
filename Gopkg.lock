@@ -38,7 +38,7 @@
   branch = "master"
   name = "github.com/beorn7/perks"
   packages = ["quantile"]
-  revision = "4c0e84591b9aa9e6dcfdf3e020114cd81f89d5f9"
+  revision = "3a771d992973f24aa725d07868b467d1ddfceafb"
 
 [[projects]]
   name = "github.com/boltdb/bolt"
@@ -53,7 +53,6 @@
   revision = "cb7008ab3d8359b78c5f464cb7cf160107ad5925"
 
 [[projects]]
-  branch = "master"
   name = "github.com/containerd/containerd"
   packages = [
     "archive",
@@ -93,7 +92,7 @@
     "snapshots/storage",
     "sys"
   ]
-  revision = "4c8bbb55b7f8bbf4c7477a4de2ba0d4c3055b9a9"
+  revision = "af593cf5ab1d8089a42ee7f0b6ed541899378bf7"
 
 [[projects]]
   branch = "master"
@@ -117,6 +116,12 @@
   name = "github.com/containerd/typeurl"
   packages = ["."]
   revision = "f6943554a7e7e88b3c14aad190bf05932da84788"
+
+[[projects]]
+  branch = "go1.10"
+  name = "github.com/dmcgowan/go-tar"
+  packages = ["."]
+  revision = "01eea4a853c4e9ab63191abd92e8ed55be1f0928"
 
 [[projects]]
   branch = "master"
@@ -150,7 +155,7 @@
     "registry/storage/cache",
     "registry/storage/cache/memory"
   ]
-  revision = "607ae5d128a82f280e8c7f453d5fb30c535bda17"
+  revision = "23bef416bdd6dcff90083288c284367cf6af955e"
 
 [[projects]]
   branch = "master"
@@ -394,7 +399,7 @@
     "worker",
     "worker/base"
   ]
-  revision = "3e90755493855ad424a39dd77561599ae9b58926"
+  revision = "a1af6d9037d05a8ed4527b9f5ad488c23f479348"
 
 [[projects]]
   name = "github.com/opencontainers/go-digest"
@@ -626,6 +631,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "fab6fe659f73dce4950097f97b7814b565ba7d99b2dd866927cab8ea61b34325"
+  inputs-digest = "68ce876a41b3bb707e6451437cfd0271f33b49320f58b2fe88c238a515656449"
   solver-name = "gps-cdcl"
   solver-version = 1
