@@ -56,8 +56,8 @@
 
 [[constraint]]
   name = "github.com/opencontainers/runc"
-  branch = "demo-rootless"
-  source = "github.com/AkihiroSuda/runc"
+  branch = "all-rootless-patches"
+  source = "github.com/jessfraz/runc"
 
 [[constraint]]
   name = "github.com/containerd/go-runc"

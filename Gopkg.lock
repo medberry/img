@@ -418,7 +418,7 @@
   version = "v1.0.1"
 
 [[projects]]
-  branch = "demo-rootless"
+  branch = "all-rootless-patches"
   name = "github.com/opencontainers/runc"
   packages = [
     "libcontainer/configs",
@@ -428,8 +428,8 @@
     "libcontainer/user",
     "libcontainer/utils"
   ]
-  revision = "a8356f2fc7b2d60704f3198b562663c03a032eb9"
-  source = "github.com/AkihiroSuda/runc"
+  revision = "f8fd48436df912e8d5ebb36156ac339aa8a9ff20"
+  source = "github.com/jessfraz/runc"
 
 [[projects]]
   name = "github.com/opencontainers/runtime-spec"
@@ -631,6 +631,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "68ce876a41b3bb707e6451437cfd0271f33b49320f58b2fe88c238a515656449"
+  inputs-digest = "3ffec025c0582b6f78f5088e0f45fbb9d738f23a41a60886a923ff31b48341c4"
   solver-name = "gps-cdcl"
   solver-version = 1

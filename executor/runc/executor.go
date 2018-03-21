@@ -20,7 +20,6 @@ import (
 	"github.com/moby/buildkit/executor/oci"
 	"github.com/moby/buildkit/identity"
 	"github.com/opencontainers/runc/libcontainer/specconv"
-	"github.com/sirupsen/logrus"
 )
 
 // Executor is the definition of an executor.
@@ -163,10 +162,6 @@ func (w *Executor) Exec(ctx context.Context, meta executor.Meta, root cache.Moun
 		// Remove the cgroups path.
 		spec.Linux.CgroupsPath = ""
 	}
-
-	// Get the uid and gid maps.
-	logrus.Infof("uidmap: %#v", spec.Linux.UIDMappings)
-	logrus.Infof("gidmap: %#v", spec.Linux.GIDMappings)
 
 	// Set the default seccomp profile.
 	spec.Linux.Seccomp = DefaultSeccompProfile
