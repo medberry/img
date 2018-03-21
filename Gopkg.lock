@@ -53,7 +53,7 @@
   revision = "cb7008ab3d8359b78c5f464cb7cf160107ad5925"
 
 [[projects]]
-  branch = "no-lchown"
+  branch = "master"
   name = "github.com/containerd/containerd"
   packages = [
     "archive",
@@ -93,8 +93,7 @@
     "snapshots/storage",
     "sys"
   ]
-  revision = "5b91bd470c4b43f38ae89d675e1241549fb6adf7"
-  source = "github.com/jessfraz/containerd"
+  revision = "4c8bbb55b7f8bbf4c7477a4de2ba0d4c3055b9a9"
 
 [[projects]]
   branch = "master"
@@ -120,12 +119,6 @@
   revision = "f6943554a7e7e88b3c14aad190bf05932da84788"
 
 [[projects]]
-  branch = "go1.10"
-  name = "github.com/dmcgowan/go-tar"
-  packages = ["."]
-  revision = "01eea4a853c4e9ab63191abd92e8ed55be1f0928"
-
-[[projects]]
   branch = "master"
   name = "github.com/docker/cli"
   packages = [
@@ -134,7 +127,7 @@
     "cli/config/credentials",
     "opts"
   ]
-  revision = "c0ffb9491cdffb628e18bb491b566255987fd28d"
+  revision = "c1b58a90961424e0b97956b93a88303a2790d789"
 
 [[projects]]
   branch = "master"
@@ -198,7 +191,7 @@
     "registry",
     "registry/resumable"
   ]
-  revision = "0c1006f1abc1af7aa6b9847754370d054dfa6c68"
+  revision = "4460472f4ee419794bb416d131c92dc296b5c625"
   source = "github.com/moby/moby"
 
 [[projects]]
@@ -344,6 +337,7 @@
   revision = "2bca23e0e452137f789efbc8610126fd8b94f73b"
 
 [[projects]]
+  branch = "master"
   name = "github.com/moby/buildkit"
   packages = [
     "api/services/control",
@@ -400,8 +394,7 @@
     "worker",
     "worker/base"
   ]
-  revision = "all-changes"
-  source = "github.com/jessfraz/buildkit"
+  revision = "3e90755493855ad424a39dd77561599ae9b58926"
 
 [[projects]]
   name = "github.com/opencontainers/go-digest"
@@ -563,7 +556,7 @@
     "unix",
     "windows"
   ]
-  revision = "7ceb54c8418b8f9cdf0177b511d5cbb06e9fae39"
+  revision = "bb729a57828d76e3050e664d86aa052741ab620f"
 
 [[projects]]
   name = "golang.org/x/text"
@@ -633,6 +626,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6c8752398f49dd208284b06a604cbad0f064a7be4900f29ee98f8a06ae63fcbf"
+  inputs-digest = "fab6fe659f73dce4950097f97b7814b565ba7d99b2dd866927cab8ea61b34325"
   solver-name = "gps-cdcl"
   solver-version = 1

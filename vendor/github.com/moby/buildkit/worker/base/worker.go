@@ -61,7 +61,7 @@ type Worker struct {
 	WorkerOpt
 	CacheManager  cache.Manager
 	SourceManager *source.Manager
-	Cache         instructioncache.InstructionCache
+	cache         instructioncache.InstructionCache
 	Exporters     map[string]exporter.Exporter
 	ImageSource   source.Source
 	CacheExporter *cacheimport.CacheExporter // TODO: remove
@@ -94,6 +94,7 @@ func NewWorker(opt WorkerOpt) (*Worker, error) {
 		ContentStore:   opt.ContentStore,
 		SessionManager: opt.SessionManager,
 		Applier:        opt.Applier,
+		ImageStore:     opt.ImageStore,
 		CacheAccessor:  cm,
 	})
 	if err != nil {
@@ -200,7 +201,7 @@ func NewWorker(opt WorkerOpt) (*Worker, error) {
 		WorkerOpt:     opt,
 		CacheManager:  cm,
 		SourceManager: sm,
-		Cache:         ic,
+		cache:         ic,
 		Exporters:     exporters,
 		ImageSource:   is,
 		CacheExporter: ce,
@@ -268,7 +269,7 @@ func (w *Worker) Exporter(name string) (exporter.Exporter, error) {
 }
 
 func (w *Worker) InstructionCache() instructioncache.InstructionCache {
-	return w.Cache
+	return w.cache
 }
 
 // utility function. could be moved to the constructor logic?

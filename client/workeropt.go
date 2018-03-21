@@ -7,15 +7,12 @@ import (
 
 	"github.com/boltdb/bolt"
 	"github.com/containerd/containerd/content/local"
-	"github.com/containerd/containerd/diff"
 	"github.com/containerd/containerd/diff/apply"
 	"github.com/containerd/containerd/diff/walking"
 	ctdmetadata "github.com/containerd/containerd/metadata"
 	ctdsnapshot "github.com/containerd/containerd/snapshots"
 	"github.com/containerd/containerd/snapshots/naive"
 	"github.com/containerd/containerd/snapshots/overlay"
-	mountlessapply "github.com/genuinetools/img/diff/apply"
-	mountlesswalking "github.com/genuinetools/img/diff/walking"
 	"github.com/genuinetools/img/executor/runc"
 	"github.com/genuinetools/img/snapshots/fuse"
 	"github.com/genuinetools/img/types"
@@ -102,25 +99,6 @@ func (c *Client) createWorkerOpt() (opt base.WorkerOpt, err error) {
 
 	xlabels := base.Labels("oci", c.backend)
 
-	// TODO: remove everything below when we remove mountless.
-	var (
-		applier  diff.Applier
-		comparer diff.Comparer
-	)
-	switch c.backend {
-	case types.FUSEBackend:
-		applier = mountlessapply.NewFileSystemApplier(contentStore)
-		comparer = mountlesswalking.NewWalkingDiff(contentStore)
-	case types.NaiveBackend:
-		applier = mountlessapply.NewFileSystemApplier(contentStore)
-		comparer = mountlesswalking.NewWalkingDiff(contentStore)
-	case types.OverlayFSBackend:
-		applier = apply.NewFileSystemApplier(contentStore)
-		comparer = walking.NewWalkingDiff(contentStore)
-	default:
-		return opt, fmt.Errorf("%s is not a valid snapshots backend", c.backend)
-	}
-
 	opt = base.WorkerOpt{
 		ID:            id,
 		Labels:        xlabels,
@@ -128,8 +106,8 @@ func (c *Client) createWorkerOpt() (opt base.WorkerOpt, err error) {
 		Executor:      exe,
 		Snapshotter:   containerdsnapshot.NewSnapshotter(mdb.Snapshotter(c.backend), contentStore, md, "buildkit", gc),
 		ContentStore:  contentStore,
-		Applier:       applier,
-		Differ:        comparer,
+		Applier:       apply.NewFileSystemApplier(contentStore),
+		Differ:        walking.NewWalkingDiff(contentStore),
 		ImageStore:    imageStore,
 	}
 

@@ -17,6 +17,7 @@
 package archive
 
 import (
+	"archive/tar"
 	"context"
 	"fmt"
 	"io"
@@ -31,9 +32,7 @@ import (
 
 	"github.com/containerd/containerd/log"
 	"github.com/containerd/continuity/fs"
-	"github.com/dmcgowan/go-tar"
 	"github.com/pkg/errors"
-	"github.com/sirupsen/logrus"
 )
 
 var bufPool = &sync.Pool{
@@ -391,7 +390,7 @@ func createTarFile(ctx context.Context, path, extractDir string, hdr *tar.Header
 	// Lchown is not supported on Windows.
 	if runtime.GOOS != "windows" {
 		if err := os.Lchown(path, hdr.Uid, hdr.Gid); err != nil {
-			logrus.Debugf("lchown failed: %v", err)
+			return err
 		}
 	}
 
