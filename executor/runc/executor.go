@@ -11,6 +11,7 @@ import (
 	"path/filepath"
 	"syscall"
 
+	"github.com/containerd/containerd/contrib/seccomp"
 	"github.com/containerd/containerd/mount"
 	containerdoci "github.com/containerd/containerd/oci"
 	"github.com/containerd/continuity/fs"
@@ -164,7 +165,7 @@ func (w *Executor) Exec(ctx context.Context, meta executor.Meta, root cache.Moun
 	}
 
 	// Set the default seccomp profile.
-	spec.Linux.Seccomp = DefaultSeccompProfile
+	spec.Linux.Seccomp = seccomp.DefaultProfile(spec)
 
 	if err := json.NewEncoder(f).Encode(spec); err != nil {
 		return err
